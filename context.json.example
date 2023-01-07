@@ -1,0 +1,10 @@
+{
+  "chatbot": {
+    "slackWorkspaceId": "",
+    "slackChannelConfigurationName": "",
+    "slackChannelId": ""
+  },
+  "mailAddresses": [
+    ""
+  ]
+}

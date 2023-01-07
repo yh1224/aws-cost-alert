@@ -1,14 +1,28 @@
-# Welcome to your CDK TypeScript project
+# AWS Cost Anomaly
 
-This is a blank project for CDK development with TypeScript.
+Notify AWS Cost Anomaly.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## How to deploy
 
-## Useful commands
+ 1. Configure Slack client on [AWS Chatbot](https://us-east-2.console.aws.amazon.com/chatbot/home) (manually)
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+ 2. Create context.json and configure
+
+    - chatbot.slackWorkspaceId : Workspace ID created on AWS Chatbot
+    - chatbot.slackChannelConfigurationName : Name of channel configuration to create
+    - chatbot.slackChannelId : Slack Channel ID to notify
+    - mailAddresses : Email addresses to send summaries
+
+ 3. Prepare
+
+    ```shell
+    npm install -g cdk
+    npm install
+    cdk bootstrap
+    ```
+
+ 4. Deploy stack
+
+    ```shell
+    cdk deploy
+    ```
