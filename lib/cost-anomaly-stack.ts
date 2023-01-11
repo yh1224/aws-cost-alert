@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import * as ce from "aws-cdk-lib/aws-ce";
 import * as chatbot from "aws-cdk-lib/aws-chatbot";
+import * as iam from "aws-cdk-lib/aws-iam";
 import * as sns from "aws-cdk-lib/aws-sns";
 import {Construct} from "constructs";
 import {Context} from "./Context";
@@ -16,7 +17,13 @@ export class CostAnomalyStack extends cdk.Stack {
         const context = props.context;
 
         // CostAlarm Topic
-        const topic = new sns.Topic(this, "CostAlarmTopic");
+        const costAlarmTopic = new sns.Topic(this, "CostAlarmTopic");
+        costAlarmTopic.addToResourcePolicy(new iam.PolicyStatement({
+            actions: ["sns:Publish"],
+            effect: iam.Effect.ALLOW,
+            principals: [new iam.ServicePrincipal("costalerts.amazonaws.com")],
+            resources: [costAlarmTopic.topicArn],
+        }));
 
         // Chatbot
         const slackChannel = new chatbot.SlackChannelConfiguration(this, "SlackChannel", {
@@ -25,7 +32,7 @@ export class CostAnomalyStack extends cdk.Stack {
             slackChannelId: context.chatbot.slackChannelId,
             loggingLevel: chatbot.LoggingLevel.ERROR,
         });
-        slackChannel.addNotificationTopic(topic);
+        slackChannel.addNotificationTopic(costAlarmTopic);
 
         // Cost Anomaly Detection
         const cfnAnomalyMonitor = new ce.CfnAnomalyMonitor(this, "AnomalyMonitor", {
@@ -38,7 +45,7 @@ export class CostAnomalyStack extends cdk.Stack {
             frequency: "IMMEDIATE",
             monitorArnList: [cfnAnomalyMonitor.attrMonitorArn],
             subscribers: [{
-                address: topic.topicArn,
+                address: costAlarmTopic.topicArn,
                 type: "SNS",
             }],
             subscriptionName: "Anomaly Alert",
