@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/aws-cost-anomaly.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/aws-cost-alert.ts",
   "watch": {
     "include": [
       "**"

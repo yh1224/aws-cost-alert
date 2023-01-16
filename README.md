@@ -1,6 +1,4 @@
-# AWS Cost Anomaly
-
-Notify AWS Cost Anomaly.
+# AWS Cost Alert
 
 ## How to deploy
 

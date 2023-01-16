@@ -1,8 +1,8 @@
 {
-  "name": "aws-cost-anomaly",
+  "name": "aws-cost-alert",
   "version": "0.1.0",
   "bin": {
-    "aws-cost-anomaly": "bin/aws-cost-anomaly.js"
+    "aws-cost-alert": "bin/aws-cost-alert.js"
   },
   "scripts": {
     "build": "tsc",

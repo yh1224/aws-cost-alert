@@ -6,12 +6,12 @@ import * as sns from "aws-cdk-lib/aws-sns";
 import {Construct} from "constructs";
 import {Context} from "./Context";
 
-interface CostAnomalyStackProps extends cdk.StackProps {
+interface CostAlertStackProps extends cdk.StackProps {
     readonly context: Context,
 }
 
-export class CostAnomalyStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, props: CostAnomalyStackProps) {
+export class CostAlertStack extends cdk.Stack {
+    constructor(scope: Construct, id: string, props: CostAlertStackProps) {
         super(scope, id, props);
 
         const context = props.context;
